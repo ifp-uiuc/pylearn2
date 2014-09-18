@@ -57,6 +57,7 @@ DllExport void convLocalMaxInverse(NVMatrix& images, NVMatrix& maxGrads, NVMatri
 DllExport void convLocalMaxInverse(NVMatrix& images, NVMatrix& maxGrads, NVMatrix& maxActs, NVMatrix& target,
 				   int subsX, int startX, int strideX, int outputsX, float scaleTargets, float scaleOutput);
 
+
 DllExport void convLocalAvgUndo(NVMatrix& avgGrads, NVMatrix& target,
                       int subsX, int startX, int strideX, int outputsX, int imgSize);
 

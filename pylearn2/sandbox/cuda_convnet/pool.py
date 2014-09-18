@@ -907,6 +907,19 @@ class MaxPoolGrad(GpuOp):
 
         return rval
 
+    # Make sure the cuda_convnet library is compiled and up-to-date
+    def make_thunk(self, node, storage_map, compute_map, no_recycling):
+        """
+        .. todo::
+
+            WRITEME
+        """
+        if not convnet_available():
+            raise RuntimeError('Could not compile cuda_convnet')
+
+        return super(MaxPoolGrad, self).make_thunk(
+                node, storage_map, compute_map, no_recycling)
+
 
 class MaxPoolInverse(GpuOp):
     """
@@ -1038,7 +1051,7 @@ class MaxPoolInverse(GpuOp):
         if self.copy_non_contiguous:
             raise UnimplementedError()
         else:
-            basic_setup = "#define MAXPOOLGRAD_COPY_NON_CONTIGUOUS 0\n"
+            basic_setup = "#define MAXPOOLINVERSE_COPY_NON_CONTIGUOUS 0\n"
 
         # Convert images in nv_images, an NVMatrix, for compatibility
         # with the cuda-convnet functions
@@ -1213,5 +1226,5 @@ class MaxPoolInverse(GpuOp):
         if not convnet_available():
             raise RuntimeError('Could not compile cuda_convnet')
 
-        return super(MaxPoolGrad, self).make_thunk(
+        return super(MaxPoolInverse, self).make_thunk(
                 node, storage_map, compute_map, no_recycling)

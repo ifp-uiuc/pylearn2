@@ -36,10 +36,6 @@
 
 using namespace std;
 
-__device__ inline float square(const float a) {
-    return a * a;
-}
-
 
 template<int B_Y, int B_X, int imgsPerThread, int filtersPerThread, bool add, bool checkCaseBounds>
 __global__ void kLocalMaxInverse(float* imgs, float* maxGrads, float* maxActs, float* target, const int imgSize, const int numFilters,
@@ -103,8 +99,10 @@ __global__ void kLocalMaxInverse(float* imgs, float* maxGrads, float* maxActs, f
                             const float ma = maxActs[(f * B_Y * numOutputs + outputIdx) * numImages + i * B_X]; 
                             const float mg = maxGrads[(f * B_Y * numOutputs + outputIdx) * numImages + i * B_X];
                             const float img = shImgs[threadIdx.y + B_Y * f][threadIdx.x + B_X * i];
-
-                            prod[f][i] == (img == ma) ? mg : 0;
+			    
+			    if (img == ma) {
+				prod[f][i] = mg;
+			    }
                         }
                     }
                 }

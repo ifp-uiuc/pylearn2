@@ -28,6 +28,7 @@ cuda_convnet_loc = os.path.join(config.compiledir, 'cuda_convnet')
 # In partial dependency order: the last ones depend on the first ones
 cuda_convnet_file_sources = ('nvmatrix_kernels.cu', 'nvmatrix.cu',
                              'conv_util.cu', 'filter_acts.cu', 'img_acts.cu',
+                             'maxunpool.cu',
                              'weight_acts.cu')
 cuda_convnet_so = os.path.join(cuda_convnet_loc,
         'cuda_convnet.' + get_lib_extension())
@@ -80,6 +81,7 @@ def should_recompile():
             'cudaconv2.cuh',
             'filter_acts.cu',
             'img_acts.cu',
+            'maxunpool.cu',
             'nvmatrix.cu',
             'nvmatrix.cuh',
             'nvmatrix_kernels.cu',
