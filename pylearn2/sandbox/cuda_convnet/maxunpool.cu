@@ -178,7 +178,7 @@ void convLocalMaxInverse(NVMatrix& images, NVMatrix& maxGrads, NVMatrix& maxActs
     if (imgsPerThread == 4) {
         if  (checkCaseBounds) {
             if (scaleTargets == 0 && scaleOutput == 1) {
-                kLocalMaxUndo<4, 32, 4, 2, false, true><<<blocks, threads>>>(images.getDevData(), maxGrads.getDevData(), maxActs.getDevData(), target.getDevData(),
+                kLocalMaxInverse<4, 32, 4, 2, false, true><<<blocks, threads>>>(images.getDevData(), maxGrads.getDevData(), maxActs.getDevData(), target.getDevData(),
                                                                 imgSize, numFilters, numImages, subsX, startX, strideX, outputsX, scaleTargets, scaleOutput);
             } else {
                 kLocalMaxInverse<4, 32, 4, 2, true, true><<<blocks, threads>>>(images.getDevData(), maxGrads.getDevData(), maxActs.getDevData(), target.getDevData(),
